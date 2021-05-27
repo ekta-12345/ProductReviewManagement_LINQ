@@ -47,8 +47,8 @@ namespace ProductReviewManagement
 
             //IterateProductReview(); //UC1
             //RetrieveTop3Records(productReviewlist); //UC2
-            RetrieveRecordsWithGreaterThan3Rating(productReviewlist);//UC3
-
+            //RetrieveRecordsWithGreaterThan3Rating(productReviewlist);//UC3
+            RetrieveCountOfReviewPresentForEachProductId(productReviewlist);//UC4
             Console.ReadLine();
         }
 
@@ -87,6 +87,18 @@ namespace ProductReviewManagement
                 Console.WriteLine($"ProductId:- {List.ProductId}   || UserId:- {List.UserId}   || Rating:- {List.Rating}   || Review:- {List.Review }   ||   IsLike:- {List.isLike }"); //Print data
             }
         }
+        // UC4:Retrieve count of review present for each productID.
+        
+        public static void RetrieveCountOfReviewPresentForEachProductId(List<ListOfProductReview> productReviewlist)
+        {
+            var RecordedData = (productReviewlist.GroupBy(p => p.ProductId).Select(x => new { ProductId = x.Key, Count = x.Count() }));
+            Console.WriteLine("\n Count group by ProductId");
+            foreach (var List in RecordedData)
+            {
+                Console.WriteLine($"ProductId:- {List.ProductId}   || Count :- {List.Count}"); //Print data
+            }
+        }
+
 
 
 
