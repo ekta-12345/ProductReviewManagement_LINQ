@@ -53,7 +53,9 @@ namespace ProductReviewManagement
             //SkipTopFiveRecords(productReviewlist)//UC6
             //RetrieveProductIDAndReviewUsingLambdaSyntax(productReviewlist);UC7
             //CreateDataTable();UC8
-            RetrieveRecordWithTrueIsLike();
+            //RetrieveRecordWithTrueIsLike();UC9
+            FindAverageRatingOfTheEachProductId();
+
             Console.ReadLine();
         }
 
@@ -230,10 +232,34 @@ namespace ProductReviewManagement
                 Console.WriteLine("ProductId:-" + list.Field<int>("ProductId") + "\t" + "UserId:- " + list.Field<int>("UserId") + "\t" + "Rating:-" + list.Field<double>("Rating") + "\t" + "Review:-" + list.Field<string>("Review") + "\t" + "isLike:-" + list.Field<bool>("isLike"));
             }
         }
+        //UC10: Find average rating of the each productId using LINQ
+
+        public static void FindAverageRatingOfTheEachProductId()
+        {
+            try
+            {
+                CreateDataTable(); //UC8 call CreateDataTable method 
+                                   // Query syntax for LINQ 
+                var records = table.AsEnumerable().GroupBy(r => r.Field<int>("ProductId")).Select(r => new { ProductId = r.Key, Average = r.Average(z => (z.Field<double>("Rating"))) });
+                Console.WriteLine("\nProductId and its average rating");
+                foreach (var v in records)
+                {
+                    Console.WriteLine($"ProductID:{v.ProductId}\tAverageRating:{v.Average}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
 
     }
 
 }
+
+    
+
+
     
 
 
