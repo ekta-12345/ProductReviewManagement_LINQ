@@ -43,13 +43,39 @@ namespace ProductReviewManagement
                new ListOfProductReview() { ProductId = 25, UserId = 12, Rating = 3, Review = "Average", isLike = false }, 
               
             };
-            foreach (var list in productReviewlist)
+            //CreateDataTable(); // Class Program
+
+            //IterateProductReview(); //UC1
+            Retrievetop3records(productReviewlist); //UC2
+
+
+            Console.ReadLine();
+        }
+
+        public static void IterateProductReview(List<ListOfProductReview> productReviewlist)
+        {
+            foreach (ListOfProductReview list in productReviewlist) //ptint list item
             {
                 Console.WriteLine($"ProductId:- {list.ProductId}   || UserId:- {list.UserId}   || Rating:- {list.Rating}   || Review:- {list.Review }   ||   IsLike:- {list.isLike }"); //Print data
             }
-            // CreateDataTable();
-            Console.ReadLine();
         }
+        /* UC2:- Product Review Management.
+                - Retrieve top 3 records from the list who’s rating is high using LINQ.
+       */
+        public static void Retrievetop3records(List<ListOfProductReview> productReviewlist)
+        {
+            //Query syntax for LINQ
+            var result = (from products in productReviewlist
+                          orderby products.Rating descending
+                          select products).Take(3);
+            foreach (var elements in result)
+            {
+                Console.WriteLine($"ProductId:- {elements.ProductId} UserId:- {elements.UserId} Rating:- {elements.Rating} Review:- {elements.Review} isLike:- {elements.isLike}");
+            }
+
+        }
+
+          
         public static void CreateDataTable() //create method
         {
             DataTable table = new DataTable(); //create table and create object
@@ -64,6 +90,7 @@ namespace ProductReviewManagement
             DisplayTableProduct(table);
 
         }
+            
         public static void DisplayTableProduct(DataTable table) //Create DisplayTableProduct method
         {
             var Productname = from product in table.AsEnumerable() select product.Field<string>("ProductName"); //Fetch Product of the table
