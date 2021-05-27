@@ -55,8 +55,8 @@ namespace ProductReviewManagement
             //CreateDataTable();UC8
             //RetrieveRecordWithTrueIsLike();UC9
             //FindAverageRatingOfTheEachProductId();UC10
-            RetrieveRecordsWithReviewContainsNice();
-
+            //RetrieveRecordsWithReviewContainsNice();UC11
+            RetrieveRecordsForGivenUserIdOrderByRating();
             Console.ReadLine();
         }
 
@@ -267,6 +267,29 @@ namespace ProductReviewManagement
                 //Printing data
                 Console.WriteLine("\nRecords in table Whose Review contains Nice:");
                 foreach (var list in retrieveData)
+                {
+                    Console.WriteLine("ProductId:- " + list.Field<int>("ProductId") + "\t" + "UserId:-" + list.Field<int>("UserId") + "\t" + "Rating:-" + list.Field<double>("Rating") + "\t" + "Review:-" + list.Field<string>("Review") + "\t" + "IsLike:-" + list.Field<bool>("isLike"));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        //UC12: Retreive all records from the list who’s Userid =10 and order by rating using LINQ
+
+        public static void RetrieveRecordsForGivenUserIdOrderByRating() //create method RetrieveRecordsForGivenUserIdOrderByRating
+        {
+            try
+            {
+                CreateDataTable(); //UC8 call CreateDataTable method 
+                                   // Query syntax for LINQ 
+                var retrievedData = from records in table.AsEnumerable()
+                                    where (records.Field<int>("UserId") == 10)
+                                    orderby records.Field<double>("Rating") descending
+                                    select records;
+                Console.WriteLine("\nSorted records by rating  with userId=10"); //print
+                foreach (var list in retrievedData) //iterates values
                 {
                     Console.WriteLine("ProductId:- " + list.Field<int>("ProductId") + "\t" + "UserId:-" + list.Field<int>("UserId") + "\t" + "Rating:-" + list.Field<double>("Rating") + "\t" + "Review:-" + list.Field<string>("Review") + "\t" + "IsLike:-" + list.Field<bool>("isLike"));
                 }
