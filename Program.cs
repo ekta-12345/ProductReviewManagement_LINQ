@@ -46,8 +46,8 @@ namespace ProductReviewManagement
             //CreateDataTable(); // Class Program
 
             //IterateProductReview(); //UC1
-            Retrievetop3records(productReviewlist); //UC2
-
+            //RetrieveTop3Records(productReviewlist); //UC2
+            RetrieveRecordsWithGreaterThan3Rating(productReviewlist);//UC3
 
             Console.ReadLine();
         }
@@ -59,10 +59,9 @@ namespace ProductReviewManagement
                 Console.WriteLine($"ProductId:- {list.ProductId}   || UserId:- {list.UserId}   || Rating:- {list.Rating}   || Review:- {list.Review }   ||   IsLike:- {list.isLike }"); //Print data
             }
         }
-        /* UC2:- Product Review Management.
-                - Retrieve top 3 records from the list who’s rating is high using LINQ.
-       */
-        public static void Retrievetop3records(List<ListOfProductReview> productReviewlist)
+        // UC2:Retrieve top 3 records from the list who’s rating is high using LINQ.
+            
+        public static void RetrieveTop3Records(List<ListOfProductReview> productReviewlist)
         {
             //Query syntax for LINQ
             var result = (from products in productReviewlist
@@ -74,8 +73,23 @@ namespace ProductReviewManagement
             }
 
         }
+        //UC3: - Retrieve all record from the list who’s rating are greater then 3 and productID is 1 or 4 or 9 using LINQ.
+                     
+        public static void RetrieveRecordsWithGreaterThan3Rating(List<ListOfProductReview> productReviewlist)
+        {           //Query syntax for LINQ 
+            var RecordedData = (from productReviews in productReviewlist
+                                where (productReviews.ProductId == 1 || productReviews.ProductId == 4 || productReviews.ProductId == 9)
+                                && productReviews.Rating > 3
+                                select productReviews);
+            Console.WriteLine("\nProducts with Rating Greater than 3 and productID = 1 or 4 or 9 are:- ");
+            foreach (var List in RecordedData)
+            {
+                Console.WriteLine($"ProductId:- {List.ProductId}   || UserId:- {List.UserId}   || Rating:- {List.Rating}   || Review:- {List.Review }   ||   IsLike:- {List.isLike }"); //Print data
+            }
+        }
 
-          
+
+
         public static void CreateDataTable() //create method
         {
             DataTable table = new DataTable(); //create table and create object
