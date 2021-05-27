@@ -50,7 +50,8 @@ namespace ProductReviewManagement
             //RetrieveRecordsWithGreaterThan3Rating(productReviewlist);//UC3
             //RetrieveCountOfReviewPresentForEachProductId(productReviewlist);//UC4
             //RetrieveOnlyProductIDAndReviewOfAllRecords(productReviewlist);//UC5
-            SkipTopFiveRecords(productReviewlist);
+            //SkipTopFiveRecords(productReviewlist)//UC6
+            RetrieveProductIDAndReviewUsingLambdaSyntax(productReviewlist);
             Console.ReadLine();
         }
 
@@ -141,8 +142,7 @@ namespace ProductReviewManagement
                 Console.WriteLine(ex.Message);
             }
         }
-        //UC7:- Retrieve only productId and review from the list for all records using LINQ select operator.
-
+        //UC7: Retrieve only productId and review from the list for all records using LINQ select operator.
 
         public static void RetrieveProductIDAndReviewUsingLambdaSyntax(List<ListOfProductReview> productReviewlist)
         {
