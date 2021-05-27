@@ -49,7 +49,8 @@ namespace ProductReviewManagement
             //RetrieveTop3Records(productReviewlist); //UC2
             //RetrieveRecordsWithGreaterThan3Rating(productReviewlist);//UC3
             //RetrieveCountOfReviewPresentForEachProductId(productReviewlist);//UC4
-            RetrieveOnlyProductIDAndReviewOfAllRecords(productReviewlist);//UC5
+            //RetrieveOnlyProductIDAndReviewOfAllRecords(productReviewlist);//UC5
+            SkipTopFiveRecords(productReviewlist);
             Console.ReadLine();
         }
 
@@ -120,7 +121,26 @@ namespace ProductReviewManagement
             }
         }
 
+        // UC6:Skip top 5 records from the list using LINQ and display other Records.
 
+
+        public static void SkipTopFiveRecords(List<ListOfProductReview> productReviewlist)
+        {
+            try
+            {
+                var RecordedData = (from products in productReviewlist
+                                    select products).Skip(5);
+                Console.WriteLine("\n Skiping the Top five records and Display others ");
+                foreach (var productReview in RecordedData) //traversing each items
+                {
+                    Console.WriteLine($"ProductId:- {productReview.ProductId}\tUserId:- {productReview.UserId}\tRating:- {productReview.Rating}\t  Review:- {productReview.Review}  \t    isLike:- {productReview.isLike}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
         public static void CreateDataTable() //create method
         {
             DataTable table = new DataTable(); //create table and create object
