@@ -52,7 +52,8 @@ namespace ProductReviewManagement
             //RetrieveOnlyProductIDAndReviewOfAllRecords(productReviewlist);//UC5
             //SkipTopFiveRecords(productReviewlist)//UC6
             //RetrieveProductIDAndReviewUsingLambdaSyntax(productReviewlist);UC7
-            CreateDataTable();
+            //CreateDataTable();UC8
+            RetrieveRecordWithTrueIsLike();
             Console.ReadLine();
         }
 
@@ -212,6 +213,27 @@ namespace ProductReviewManagement
                 Console.WriteLine(ex.Message);
             }
         }
+        // UC9: Retrieve all the records from the datatable variable who’s isLike value is true using LINQ
+
+        public static DataTable table = new DataTable(); //create table and create object
+        public static void RetrieveRecordWithTrueIsLike()
+        {
+            CreateDataTable(); //UC8
+           
+            var result = from product in table.AsEnumerable()
+                         where product.Field<bool>("isLike") == true
+                         select product;
+
+            Console.WriteLine("\nRecords in table whose IsLike value is true");
+            foreach (var list in result) //Printing data
+            {
+                Console.WriteLine("ProductId:-" + list.Field<int>("ProductId") + "\t" + "UserId:- " + list.Field<int>("UserId") + "\t" + "Rating:-" + list.Field<double>("Rating") + "\t" + "Review:-" + list.Field<string>("Review") + "\t" + "isLike:-" + list.Field<bool>("isLike"));
+            }
+        }
+
     }
 
 }
+    
+
+
