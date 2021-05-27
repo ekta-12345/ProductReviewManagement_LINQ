@@ -48,7 +48,8 @@ namespace ProductReviewManagement
             //IterateProductReview(); //UC1
             //RetrieveTop3Records(productReviewlist); //UC2
             //RetrieveRecordsWithGreaterThan3Rating(productReviewlist);//UC3
-            RetrieveCountOfReviewPresentForEachProductId(productReviewlist);//UC4
+            //RetrieveCountOfReviewPresentForEachProductId(productReviewlist);//UC4
+            RetrieveOnlyProductIDAndReviewOfAllRecords(productReviewlist);//UC5
             Console.ReadLine();
         }
 
@@ -98,8 +99,26 @@ namespace ProductReviewManagement
                 Console.WriteLine($"ProductId:- {List.ProductId}   || Count :- {List.Count}"); //Print data
             }
         }
-
-
+        // UC5: Retrieve only productId and review from the list for all Records. 
+               
+        public static void RetrieveOnlyProductIDAndReviewOfAllRecords(List<ListOfProductReview> productReviewlist)
+        {
+            try
+            {
+                //Query syntax for LINQ 
+                var RecordedData = (from products in productReviewlist
+                                    select new { ProductId = products.ProductId, Review = products.Review });
+                Console.WriteLine("Retrieving Product and Review from list:-");
+                foreach (var productReview in RecordedData) //traversing each items
+                {
+                    Console.WriteLine($"ProductID:-   {productReview.ProductId}  \t Review:-   { productReview.Review}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
 
 
         public static void CreateDataTable() //create method
