@@ -51,7 +51,8 @@ namespace ProductReviewManagement
             //RetrieveCountOfReviewPresentForEachProductId(productReviewlist);//UC4
             //RetrieveOnlyProductIDAndReviewOfAllRecords(productReviewlist);//UC5
             //SkipTopFiveRecords(productReviewlist)//UC6
-            RetrieveProductIDAndReviewUsingLambdaSyntax(productReviewlist);
+            //RetrieveProductIDAndReviewUsingLambdaSyntax(productReviewlist);UC7
+            CreateDataTable();
             Console.ReadLine();
         }
 
@@ -160,28 +161,57 @@ namespace ProductReviewManagement
                 Console.WriteLine(ex.Message);
             }
         }
+        //UC8: Create DataTable using C# and Add ProductID, UserID, Rating, Review and isLike fields in that.
+                
         public static void CreateDataTable() //create method
         {
-            DataTable table = new DataTable(); //create table and create object
-            table.Columns.Add("ProductId");     // add Columns in table
-            table.Columns.Add("ProductName"); // add Columns in table
-
-            table.Rows.Add("1", "Laptop"); //add rows on table
-            table.Rows.Add("2", "Mobile");
-            table.Rows.Add("3", "Tablet");
-            table.Rows.Add("4", "Desktop");
-            table.Rows.Add("5", "Watch");
-            DisplayTableProduct(table);
-
-        }
-            
-        public static void DisplayTableProduct(DataTable table) //Create DisplayTableProduct method
-        {
-            var Productname = from product in table.AsEnumerable() select product.Field<string>("ProductName"); //Fetch Product of the table
-            foreach (var item in Productname) //iiterate 
+            try
             {
-                Console.WriteLine($"ProductName:- {item}"); //print 
+                DataTable table = new DataTable(); //create table and create object
+                table.Columns.Add("ProductId", typeof(Int32)); // add Columns in table
+                table.Columns.Add("UserId", typeof(Int32)); // add Columns in table
+                table.Columns.Add("Rating", typeof(double)); // add Columns in table
+                table.Columns.Add("Review", typeof(string)); // add Columns in table
+                table.Columns.Add("isLike", typeof(bool)); // add Columns in table
+
+
+                table.Rows.Add(1, 1, 4, "Average", true); //Adding Data
+                table.Rows.Add(1, 2, 2, "Bad", false); //Adding Data
+                table.Rows.Add(3, 3, 4, "Nice", true); //Adding Data
+                table.Rows.Add(4, 4, 5, "Good", false); //Adding Data
+                table.Rows.Add(5, 5, 6, "Excelent", false); //Adding Data
+                table.Rows.Add(6, 10, 4, "Nice", true); //Adding Data
+                table.Rows.Add(7, 6, 3, "Average", true); //Adding Data
+                table.Rows.Add(8, 5, 2, "Bad", true); //Adding Data
+                table.Rows.Add(9, 10, 5, "Good", true); //Adding Data
+                table.Rows.Add(10, 41, 6, "Excelent", false); //Adding Data
+                table.Rows.Add(11, 5, 4, "Nice", false); //Adding Data
+                table.Rows.Add(12, 4, 1, "Very Bad", true); //Adding Data
+                table.Rows.Add(13, 48, 0, "Excelent", false); //Adding Data
+                table.Rows.Add(14, 41, 3, "Average", true); //Adding Data
+                table.Rows.Add(15, 51, 4, "Nice", true); //Adding Data
+                table.Rows.Add(16, 8, 1, "Very Bad", false); //Adding Data
+                table.Rows.Add(17, 18, 6, "Excelent", true); //Adding Data
+                table.Rows.Add(18, 9, 5, "Good", true); //Adding Data
+                table.Rows.Add(19, 10, 4, "Nice", false); //Adding Data
+                table.Rows.Add(20, 7, 3, "Average", true); //Adding Data
+                table.Rows.Add(21, 6, 2, "Bad", true); //Adding Data
+                table.Rows.Add(22, 5, 1, "Very Bad", false); //Adding Data
+                table.Rows.Add(23, 10, 5, "Good", false); //Adding Data
+                table.Rows.Add(24, 8, 2, "Bad", true); //Adding Date
+                table.Rows.Add(22, 12, 3, "Average", false); //Adding Data
+
+                Console.WriteLine("DataTable Records");
+                foreach (var list in table.AsEnumerable())
+                {
+                    Console.WriteLine($"ProductId:- { list.Field<int>("ProductId")}    UserId:- {list.Field<int>("UserId")}\tRating:- {list.Field<double>("Rating")}\tReview:- { list.Field<string>("Review")} \tisLike:- {list.Field<bool>("isLike")}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }
+
 }
