@@ -141,6 +141,25 @@ namespace ProductReviewManagement
                 Console.WriteLine(ex.Message);
             }
         }
+        //UC7:- Retrieve only productId and review from the list for all records using LINQ select operator.
+
+
+        public static void RetrieveProductIDAndReviewUsingLambdaSyntax(List<ListOfProductReview> productReviewlist)
+        {
+            try
+            {                // Query syntax for LINQ 
+                var RecordedData = productReviewlist.Select(reviews => new { ProductId = reviews.ProductId, Review = reviews.Review });
+                Console.WriteLine("\nRetrieving Product and Review from list");
+                foreach (var productReview in RecordedData) //traversing each items
+                {
+                    Console.WriteLine($"ProductId:- {productReview.ProductId}\tReview:- {productReview.Review}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
         public static void CreateDataTable() //create method
         {
             DataTable table = new DataTable(); //create table and create object
